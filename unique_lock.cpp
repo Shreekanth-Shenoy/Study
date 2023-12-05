@@ -65,3 +65,69 @@ Note: Overusing notify_all can lead to performance issues, as it can potentially
 
 */
 
+
+
+
+
+
+
+//Another Example
+****************************************************************************************
+
+
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+class Calculator {
+public:
+    int result;  // To store the result of calculations
+    std::mutex calcMutex;  // Mutex to protect shared resource
+    std::condition_variable calcCondition;  // Condition variable for synchronization
+
+    Calculator() : result(0) {}
+
+    void add(int value) {
+        {
+            std::lock_guard<std::mutex> locker(calcMutex);
+            result += value;
+            std::cout << "Adding: " << value << std::endl;
+        }  // lock_guard goes out of scope, releasing the lock
+        calcCondition.notify_one();  // Notify waiting threads
+    }
+
+    void subtract(int value) {
+        {
+            std::unique_lock<std::mutex> locker(calcMutex);
+            // Wait for the condition to be true (result > value)
+            calcCondition.wait(locker, [this, value]() { return result > value; });
+            result -= value;
+            std::cout << "Subtracting: " << value << std::endl;
+        }  // unique_lock goes out of scope, releasing the lock
+    }
+};
+
+int main() {
+    Calculator calc;
+
+    // Create a thread to add numbers
+    std::thread t1(&Calculator::add, &calc, 5);
+
+    // Create a thread to subtract numbers
+    std::thread t2(&Calculator::subtract, &calc, 3);
+
+    // Wait for both threads to finish
+    t1.join();
+    t2.join();
+
+    // Display the final result
+    std::cout << "Final Result: " << calc.result << std::endl;
+
+    return 0;
+}
+
+
+
+
+
