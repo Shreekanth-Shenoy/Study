@@ -8,6 +8,8 @@ Code, Compile, Run and Debug online from anywhere in world.
 *******************************************************************************/
 #include <iostream>
 #include <cstring>
+#include <ostream>
+#include <utility> 
 using namespace std;
 
 
@@ -35,28 +37,48 @@ class String
             other.m_Buffer =nullptr;
             other.m_Size = 0;
         }
+        
+        String& operator=(String&& other){
+            cout<<"Assignment "<<endl;
+            if(this != &other){
+                delete[] m_Buffer;
+                m_Buffer = other.m_Buffer;
+                m_Size = other.m_Size;
+                other.m_Buffer =nullptr;
+                other.m_Size = 0;
+            }
+            return *this;
+        }
+        
         ~String(){
-            delete m_Buffer;
+            delete[] m_Buffer;
         }
         
         void print(){
-        for(int i =0; i<m_Size;i++){
-            cout<<m_Buffer[i];
+            for(int i =0; i<m_Size;i++){
+                cout<<m_Buffer[i];
+            }
         }
-    }
+        
+        friend ostream& operator<<(ostream& stream, String& string);
+    
     
     private:
         char* m_Buffer;
         int m_Size;
 };
 
+ostream& operator<<(ostream& stream, String& string){
+    stream<<string.m_Buffer;
+    return stream;
+}
 
 class Entity{
 public:
     Entity()=default;
     Entity(const String& string):string(string){};
     Entity(String&& string):string(std::move(string)){};
-
+    
     void print(){
         string.print();
     }
@@ -67,8 +89,10 @@ public:
 
 int main()
 {
+    String string1 = "Hello";
+    String string2 = move(string1); //Move
+    String string3;
+    string3=move(string1); //Assignment
 
-    Entity e("Hello");
-    e.print();
     return 0;
 }
