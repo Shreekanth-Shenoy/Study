@@ -238,3 +238,29 @@ int main() {
 }
 
 */
+
+
+
+
+/* CHATGPT SUMMARY
+
+The Strategy Pattern is a behavioral design pattern that defines a family of algorithms, encapsulates each algorithm, and makes them interchangeable. It allows the client to choose the appropriate algorithm at runtime.
+
+In this example:
+
+FlyingStrategy and QuackingStrategy are the strategies:
+
+FlyingStrategy is an interface that defines the fly method, which is then implemented by concrete classes like SimpleFlyingStrategy and NoFlyingStrategy.
+QuackingStrategy is an interface that defines the quack method, implemented by SimpleQuackingStrategy and MuteQuackingStrategy.
+Duck class uses strategies:
+
+The Duck class has two private member variables, _flyingStrategy and _quackingStrategy, which are pointers to the FlyingStrategy and QuackingStrategy interfaces, respectively.
+The Duck constructor allows the client to pass different strategies at runtime.
+The performFly and performQuack methods of the Duck class delegate the corresponding behavior to the associated strategies.
+Client code creates instances of Duck with different strategies:
+
+In the main function, you create instances of Duck (wildDuck and domesticDuck) with different combinations of flying and quacking strategies.
+This adheres to the principles of the Strategy Pattern, allowing you to encapsulate and interchange strategies dynamically. It promotes flexibility and makes it easy to extend or modify the behavior of a class without altering its source code.
+
+
+*/
