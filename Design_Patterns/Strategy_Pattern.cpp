@@ -1,27 +1,21 @@
 /*
 
 #include<iostream>
-
 using namespace std;
 
-
 class FlyingStrategy{
-
 public:
     virtual void fly() const = 0;
 
 };
 
 class QuackingStrategy{
-
 public:
     virtual void quack() const =0;
 
 };
 
-
 class SimpleFlyingStrategy: public FlyingStrategy{
-
 public:
     void fly() const override{
         cout<<"SimpleFlyingStrategy"<<endl;
@@ -29,7 +23,6 @@ public:
 };
 
 class NoFlyingStrategy : public FlyingStrategy{
- 
 public:
     void fly() const override{
         cout<<"NoFlyingStrategy"<<endl;
@@ -49,7 +42,6 @@ public:
         cout<<"MuteQuackingStrategy"<<endl;
     }
 };
-
 
 class Duck{
 private:
@@ -72,10 +64,9 @@ public:
 
 
 int main(){
-
     Duck wildDuck(new SimpleFlyingStrategy(), new SimpleQuackingStrategy());
     Duck domesticDuck(new NoFlyingStrategy(), new MuteQuackingStrategy());
-
+   
     wildDuck.performFly();
     wildDuck.performQuack();
 
@@ -84,7 +75,6 @@ int main(){
     domesticDuck.performQuack();
 }
 
-
 */
 
 //using unique pointer to avoid explict destructors 
@@ -92,27 +82,21 @@ int main(){
 
 #include<iostream>
 #include <memory>
-
 using namespace std;
 
-
 class FlyingStrategy{
-
 public:
     virtual void fly() const = 0;
 
 };
 
 class QuackingStrategy{
-
 public:
     virtual void quack() const =0;
 
 };
 
-
 class SimpleFlyingStrategy: public FlyingStrategy{
-
 public:
     void fly() const override{
         cout<<"SimpleFlyingStrategy"<<endl;
@@ -120,7 +104,6 @@ public:
 };
 
 class NoFlyingStrategy : public FlyingStrategy{
- 
 public:
     void fly() const override{
         cout<<"NoFlyingStrategy"<<endl;
@@ -140,7 +123,6 @@ public:
         cout<<"MuteQuackingStrategy"<<endl;
     }
 };
-
 
 class Duck{
 private:
@@ -172,7 +154,6 @@ int main(){
     wildDuck.performFly();
     wildDuck.performQuack();
 
-
     domesticDuck.performFly();
     domesticDuck.performQuack();
 }
@@ -185,7 +166,6 @@ int main(){
 /*
 #include<iostream>
 #include<memory>
-
 using namespace std;
 
 class FlyingStrategy {
