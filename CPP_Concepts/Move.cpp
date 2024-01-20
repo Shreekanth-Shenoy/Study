@@ -19,7 +19,7 @@ class String
     public:
         String() = default;
         String(const char* string){
-            cout<<"Created"<<endl;
+            cout<<"Parameterised"<<endl;
             m_Size = strlen(string);
             m_Buffer = new char[m_Size];
             memcpy(m_Buffer,string,m_Size);
